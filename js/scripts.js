@@ -54,7 +54,7 @@ $(document).ready(function () {
 });
 
 
-
+/*
 // register.js
 
 document.getElementById('registrationForm').addEventListener('submit', function (event) {
@@ -73,3 +73,5 @@ document.getElementById('registrationForm').addEventListener('submit', function 
         // You can add your registration logic here
     }
 });
+
+*/
