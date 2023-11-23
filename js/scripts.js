@@ -8,18 +8,15 @@
 // 
 // your-script.js
 
-window.addEventListener('DOMContentLoaded', event => {
+document.addEventListener('DOMContentLoaded', event => {
     // Activate Bootstrap scrollspy on the main nav element
-    const mainNav = document.body.querySelector('#mainNav');
+    const mainNav = document.querySelector("#mainNav");
     if (mainNav) {
         new bootstrap.ScrollSpy(document.body, {
             target: '#mainNav',
-            rootMargin: '0px 0px -40%',
+            offset: 40, // Specify the offset as needed
         });
     }
-
-    // Initialize the Bootstrap carousel
-    const photoCarousel = new bootstrap.Carousel(document.getElementById('photoCarousel'));
 
     // Collapse responsive navbar when toggler is visible
     const navbarToggler = document.body.querySelector('.navbar-toggler');
@@ -37,20 +34,25 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
-//quando dá scroll down navbarfica cinza
+
+//quando dá scroll down navbar fica cinza
 $(document).ready(function () {
-    // Set a scroll listener
+    var initialLogoSrc = "assets/image_logo-color.png";
+
     $(window).scroll(function () {
-      // Check the scroll position
-      if ($(this).scrollTop() > 50) {
-        // If scrolled down more than 50 pixels, change the navbar color to black
-        $("#mainNav").addClass("black-navbar");
-      } else {
-        // Otherwise, keep the transparent navbar
-        $("#mainNav").removeClass("black-navbar");
-      }
+        var scrollPosition = $(this).scrollTop();
+        if (scrollPosition > 50) {
+            // Change the logo source to the new one when scrolling down
+            $("#logo").attr("src", "assets/image_logo-white.png");
+            $("#mainNav").addClass("black-navbar");
+        } else {
+            // Revert to the initial logo source when at the top
+            $("#logo").attr("src", initialLogoSrc);
+            $("#mainNav").removeClass("black-navbar");
+        }
     });
-  });
+});
+
 
 
 // register.js

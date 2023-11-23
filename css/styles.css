@@ -104,6 +104,33 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.img-fluide{
+  width: 70px;
+  height: 70px;
+}
+
+.img-fluid{
+  box-shadow:rgb(63, 63, 63);
+}
+
+.nav-link-login {
+    display: inline-block;
+    padding: 8px 16px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+
+  .nav-link-login:hover {
+    background-color: transparent;
+    color: black;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 10px;
+  }
+
+  .custom-container {
+    max-width: 800px; 
+}
+
 hr {
   margin: 1rem 0;
   color: inherit;
