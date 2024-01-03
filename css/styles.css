@@ -121,7 +121,7 @@ body {
 
 .nav-link-login:hover {
   background-color: white;
-  color: black !important;
+  color: var(--bs-gray-dark) !important;
 }
 
 .custom-container {

@@ -33,7 +33,7 @@
                 <li class="nav-item"><a class="nav-link" href="#photo-library">Events</a></li>
                 <li class="nav-item"><a class="nav-link" href="#developers">Developers</a></li>
                 <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
-                <li class="nav-item"><a class="nav-link nav-link-login ms-5 rounded px-5" href="register.html">Login</a></li>
+                <li class="nav-item"><a class="nav-link nav-link-login ms-5 rounded px-5" href="login.php">Login</a></li>
             </ul>
         </div>
     </div>
@@ -45,7 +45,7 @@
                 <div class="container px-3 mx-auto">
                     <h1 class="fw-bolder text-sm">Welcome to EventHub</h1>
                     <p class="lead text-sm">"EventHub: Crafting Moments, Managing Memories – Your Seamless Path to Unforgettable Events!"</p>
-                    <a class="btn btn-lg btn-light" id="getStartedBtn">Get Started!</a>
+                    <a class="btn btn-lg btn-light" id="getStartedBtn" href="register.php">Get Started!</a>
                 </div>
             </div>
         </div>
