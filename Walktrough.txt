@@ -1,0 +1,41 @@
+Includes:
+event.inc.php
+eventFunction.inc.php
+
+functionsRegister.inc.php
+img_update_script.php
+insert_user.php
+login.admin.php
+login.inc.php
+loginFunction.admin.php
+loginFunction.inc.php
+register.inc.php
+
+
+// Old 
+reset_password.php - Usava a pergunta de seguranca mas agora temos emails
+
+//Dashboards
+admin.php - admins
+dashboard.php - plebs
+
+//Landing Page
+index.php
+
+//Login
+login.php
+logout.php
+register.php
+adminLogin.php
+
+//Password Reset Users
+forgotPasswordHandler.php
+forgotpasswordmail.php
+
+//Error Pages
+invalidAcess.php
+invalidCredentials.php
+invalidCredentialsA.php - para o admin
+passwordChangeSuccess.php
+updateFailed.php
+404.php
