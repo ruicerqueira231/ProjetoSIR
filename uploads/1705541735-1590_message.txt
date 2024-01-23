@@ -1,0 +1,268 @@
+<?php
+session_start();
+
+// Include your database connection script
+require_once 'db/db.php';
+
+// Check if user is not logged in, redirect to login page
+if (!isset($_SESSION['userId'])) {
+    header("location: /sir/login.php");
+    exit();
+}
+
+// Handle logout action
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header("location: /sir/login.php");
+    exit();
+}
+
+// Create database connection
+$conn = mysqli_connect_mysql();
+
+// Check if the image URL update form was submitted
+if (isset($_POST['imageUrl'])) {
+    $newImageUrl = $_POST['imageUrl'];
+    $userId = $_SESSION['userId'];
+
+    // Prepare and execute update query
+    $updateStmt = $conn->prepare("UPDATE tb_user SET image_url = ? WHERE id_user = ?");
+    $updateStmt->bind_param("si", $newImageUrl, $userId);
+
+    if ($updateStmt->execute()) {
+
+    } else {
+
+    }
+
+    $updateStmt->close();
+}
+// FETCH USER ID COUNT
+$userCount = 0;
+$countQuery = "SELECT COUNT(id_user) AS userCount FROM tb_user"; // Replace 'tb_user' and 'id_user' with your actual table and column names
+$countResult = $conn->query($countQuery);
+if ($countResult) {
+    $row = $countResult->fetch_assoc();
+    $userCount = $row['userCount'];
+}
+
+// Fetch user info
+$user_id = $_SESSION['userId'];
+$query = "SELECT name, image_url FROM tb_user WHERE id_user = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if ($user) {
+    $name = $user['name'];
+    $image_url = $user['image_url'] ?: 'assets/defaultuser.png';
+} else {
+    $name = "Unknown";
+    $image_url = 'assets/defaultuser.png';
+}
+
+$stmt->close();
+$conn->close();
+
+
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link href="css/dashboard.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <!-- Horizontal Navbar -->
+        <div class="row">
+            <div class="col-12 bg-warning">
+                <!-- Navbar content (previously in sidebar) -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- User Info -->
+                    <div class="user-info d-flex align-items-center">
+                        <img src="<?php echo htmlspecialchars($image_url); ?>" alt="User Image" class="profile-picture"
+                            data-bs-toggle="modal" data-bs-target="#imageModal">
+                        <p class="user-name">
+                            <?php echo htmlspecialchars($name); ?>
+                        </p>
+                    </div>
+
+                    <!-- Navbar Links/Buttons -->
+                    <div class="navbar-buttons-container">
+                        <button class="btn btn-custom d-flex align-items-center">
+                            <i class="fas fa-tachometer-alt fa-fw me-2"></i>Dashboard
+                        </button>
+                        <button class="btn btn-custom d-flex align-items-center" data-bs-toggle="modal"
+                            data-bs-target="#notificationsModal">
+                            <i class="fas fa-bell fa-fw me-2"></i>Notifications
+                        </button>
+                    </div>
+
+
+                    <!-- Settings and Logout -->
+                    <div>
+                        <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#activeUsersModal">
+                            <i class="fas fa-users fa-fw"></i> Active Users on our Website:
+                            <?php echo $userCount; ?>
+                        </button>
+                        <button id="sidebarSettingsButton" class="btn btn-custom" data-bs-toggle="modal"
+                            data-bs-target="#settingsModal">
+                            <i class="fas fa-cog fa-fw"></i>
+                        </button>
+                        <button type="button" class="btn btn-custom" data-bs-toggle="modal"
+                            data-bs-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-fw"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="row">
+            <div class="col-12" id="page-content-wrapper">
+                <!-- Content will go here -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- NIGHT MODE CHECK BOX -->
+                    <div class="form-check modal-option">
+                        <input class="form-check-input" type="checkbox" id="nightModeCheckbox">
+                        <label class="form-check-label" for="nightModeCheckbox">
+                            Enable Night Mode
+                        </label>
+                    </div>
+
+                    <!-- PROFILE image URL -->
+                    <form action="/sir/includes/img_update_script.php" method="post">
+                        <div class="mb-3 modal-option">
+                            <label for="imageUrl" class="form-label">Profile Image Update</label>
+                            <input type="text" class="form-control" id="imageUrl" name="imageUrl"
+                                placeholder="Enter image URL (must end in .png)">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Image</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveSettingsButton">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Notifications Modal -->
+    <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Content for notifications will go here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="logout.php" class="btn btn-primary">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">User Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" id="modalImage" class="img-fluid" alt="User Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Users Modal -->
+    <div class="modal fade" id="activeUsersModal" tabindex="-1" aria-labelledby="activeUsersModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="activeUsersModalLabel">Active Users</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Total active users on our website:
+                    <?php echo $userCount; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+
+</html>

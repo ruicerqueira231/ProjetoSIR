@@ -1,0 +1,201 @@
+@charset "UTF-8";
+/*///////////////////////////////////////////// COLORS BOOTSRAP JUST TO KNOW /////////////////////////////////////////////*/
+:root {
+  --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
+  --bs-red: #dc3545;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #ffc107;
+  --bs-green: #198754;
+  --bs-teal: #20c997;
+  --bs-cyan: #0dcaf0;
+  --bs-black: #000;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-gray-100: #f8f9fa;
+  --bs-gray-200: #e9ecef;
+  --bs-gray-300: #dee2e6;
+  --bs-gray-400: #ced4da;
+  --bs-gray-500: #adb5bd;
+  --bs-gray-600: #6c757d;
+  --bs-gray-700: #495057;
+  --bs-gray-800: #343a40;
+  --bs-gray-900: #212529;
+  --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bg-yellow: #ffeb3b;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-primary-rgb: 13, 110, 253;
+  --bs-secondary-rgb: 108, 117, 125;
+  --bs-success-rgb: 25, 135, 84;
+  --bs-info-rgb: 13, 202, 240;
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-danger-rgb: 220, 53, 69;
+  --bs-light-rgb: 248, 249, 250;
+  --bs-dark-rgb: 33, 37, 41;
+  --bs-white-rgb: 255, 255, 255;
+  --bs-black-rgb: 0, 0, 0;
+  --bs-body-color-rgb: 33, 37, 41;
+  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-size: 1rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.5;
+  --bs-body-color: #212529;
+  --bs-body-bg: #fff;
+  --bs-border-width: 1px;
+  --bs-border-style: solid;
+  --bs-border-color: #dee2e6;
+  --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
+  --bs-border-radius: 0.375rem;
+  --bs-border-radius-sm: 0.25rem;
+  --bs-border-radius-lg: 0.5rem;
+  --bs-border-radius-xl: 1rem;
+  --bs-border-radius-2xl: 2rem;
+  --bs-border-radius-pill: 50rem;
+  --bs-link-color: #0d6efd;
+  --bs-link-hover-color: #0a58ca;
+  --bs-code-color: #d63384;
+  --bs-highlight-bg: #fff3cd;
+}
+
+/* General Styles */
+html {
+  scroll-padding-top: 3.5rem; /* Adjusts the scroll padding */
+}
+
+header {
+  padding-top: 9.5rem;
+  padding-bottom: 6rem;
+}
+
+section {
+  padding-top: 9rem;
+  padding-bottom: 9rem;
+}
+
+/* Navbar Styles */
+.navbar-custom {
+  background-color: #cda434; /* Dark yellow/brownish color for the navbar */
+  padding: 2rem 1rem; /* Adjust padding for navbar */
+}
+
+.navbar-custom .navbar-brand {
+  color: #fff; /* White text for brand */
+}
+
+.navbar-custom .navbar-nav .nav-link {
+  color: #fff; /* White text for navbar links */
+}
+
+.navbar-custom .user-info {
+  display: flex;
+  align-items: center;
+}
+
+/* Custom Button Styles */
+.btn-custom {
+  background-color: #cda434;
+  border-color: #cda434;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+}
+
+.btn-custom:hover {
+  background-color: #b5932f;
+  border-color: #b5932f;
+}
+
+/* Icon Only Buttons */
+.btn-icon-only {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+}
+
+/* User Info Styles */
+.user-info-container {
+  background-color: #cda434;
+  border-radius: 0;
+  padding: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  color: #000; /* Black color for the name */
+  margin-top: 0px;
+  margin-left: 30px;
+  font-weight: 1200;
+  font-size: x-large;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* Night Mode Styles */
+.night-mode {
+  background-color: black;
+  color: lightgrey;
+}
+
+.night-mode .user-name {
+  color: #000; /* Black color for the name in night mode */
+}
+
+.night-mode .navbar-custom {
+  background-color: blue; /* Blue navbar in night mode */
+}
+
+.night-mode .modal-content {
+  background-color: #333; /* Dark modal background in night mode */
+  color: lightgrey; /* Light grey text in night mode */
+}
+
+.navbar-buttons-container {
+  display: flex;        /* Use Flexbox */
+  justify-content: center; /* Center the items horizontally */
+  align-items: center;  /* Center the items vertically */
+  gap: 10px; /* Add some space between buttons */
+}
+
+.modal-option {
+  margin-bottom: 15px; /* Adjust the space as needed */
+}
+
+.btn-primary {
+  background-color: #f0ad4e; /* Bootstrap's yellow color */
+  border-color: #f0ad4e;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: #ec971f; /* Darker shade for hover, focus, active states */
+  border-color: #ec971f;
+}
